@@ -9,9 +9,7 @@ public class Track {
 	
 	public Track() {
 		this.morningSession = new Session(Shift.MORNING,LocalTime.of(9, 0),LocalTime.of(12,0));
-		//Lunch
 		this.afternoonSession = new Session(Shift.AFTERNOON,LocalTime.of(13, 0),LocalTime.of(17,0));
-		//Networking Event
 	}
 	
 	public boolean addTalk(Talk talk) {

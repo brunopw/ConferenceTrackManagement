@@ -20,7 +20,7 @@ public class FileUtils {
 
 		list = lines.collect(Collectors.toList());
 		lines.close();
-		// linhas.forEach(System.out::println);
+		// lines.forEach(System.out::println);
 
 		return list;
 	}
