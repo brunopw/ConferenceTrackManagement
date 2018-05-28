@@ -25,7 +25,7 @@ public class Session {
 		talk.setShowTime(false);
 		this.talks.add(talk);
 	}
-	
+
 	public void addNetworkingEvent() {
 		Talk talk = new Talk("Networking Event", 60);
 		talk.setTime(nextFreeTime);
@@ -79,7 +79,7 @@ public class Session {
 			talk.setTime(this.nextFreeTime);
 			this.talks.add(talk);
 			this.nextFreeTime = this.nextFreeTime.plusMinutes(talk.getMinutes());
-			//System.out.println(talk);
+			// System.out.println(talk);
 			return true;
 		}
 		return false;

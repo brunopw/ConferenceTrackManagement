@@ -39,7 +39,7 @@ public class Talk {
 	public void setTime(LocalTime time) {
 		this.time = time;
 	}
-	
+
 	public boolean showTime() {
 		return showTime;
 	}

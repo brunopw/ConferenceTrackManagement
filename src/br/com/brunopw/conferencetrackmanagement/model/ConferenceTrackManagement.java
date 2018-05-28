@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import br.com.brunopw.conferencetrackmanagement.utils.FileUtils;
 
 public class ConferenceTrackManagement {
-	
+
 	public List<Talk> loadTalks() {
 		FileUtils fu = new FileUtils();
 		List<Talk> allTalks = new ArrayList<Talk>();
@@ -22,13 +22,15 @@ public class ConferenceTrackManagement {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return allTalks;
 	}
 
 	public List<Talk> sortTalksInDescOrder(List<Talk> talks) {
-		/*talks = talks.stream().sorted(Comparator.comparing(Talk::getMinutes))
-				.collect(Collectors.toList());*/
+		/*
+		 * talks = talks.stream().sorted(Comparator.comparing(Talk::getMinutes))
+		 * .collect(Collectors.toList());
+		 */
 		talks.sort(Comparator.comparingLong(Talk::getMinutes));
 		return talks;
 	}
@@ -52,27 +54,42 @@ public class ConferenceTrackManagement {
 		return talk;
 	}
 
+	public int getBetterTalkIndexForTime(long time, List<Talk> allTalks) {
+		for (int i = 0; i < allTalks.size(); i++) {
+			if (allTalks.get(i).getMinutes() <= time)
+				return i;
+		}
+		return -1;
+	}
+
 	public List<Track> trackManagement(List<Talk> allTalks) {
 		// Create list of all Tracks
 		List<Track> allTracks = new ArrayList<Track>();
-		
-		while(!allTalks.isEmpty()) {
+
+		while (!allTalks.isEmpty()) {
 			Track track = new Track();
 			boolean trackFree = true;
-			
+
 			allTracks.add(track);
-			
-			while(trackFree && !allTalks.isEmpty()) {
-				if(track.addTalk(allTalks.get(allTalks.size()-1))) {
-					allTalks.remove(allTalks.size()-1);
+
+			while (trackFree && !allTalks.isEmpty()) {
+				if (track.addTalk(allTalks.get(allTalks.size() - 1))) {
+					allTalks.remove(allTalks.size() - 1);
 				} else {
-					trackFree = false;
+					int newTalkIndex = getBetterTalkIndexForTime(track.getFreeTime(), allTalks);
+					if (newTalkIndex == -1) {
+						trackFree = false;
+					} else if (track.addTalk(allTalks.get(newTalkIndex))) {
+						allTalks.remove(newTalkIndex);
+					} else {
+						trackFree = false;
+					}
 				}
 			}
 		}
-		
+
 		allTracks = addSpecialEvents(allTracks);
-		
+
 		return allTracks;
 	}
 

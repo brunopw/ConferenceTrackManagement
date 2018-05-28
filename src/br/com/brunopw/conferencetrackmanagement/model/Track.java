@@ -27,6 +27,10 @@ public class Track {
 		afternoonSession.addNetworkingEvent();
 	}
 	
+	public long getFreeTime() {
+		return this.morningSession.getFreeTime() + this.afternoonSession.getFreeTime();
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
